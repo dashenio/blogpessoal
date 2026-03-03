@@ -1,4 +1,4 @@
-import { Controller, Get } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
 import { PostagemService } from "../services/postagem.service";
 import { Postagem } from "../entities/postagem.entity";
 
@@ -11,7 +11,42 @@ export class PostagemController{
     ){}
     
     @Get()
+    @HttpCode(HttpStatus.OK)
     findAll(): Promise<Postagem[]>{
         return this.postagemService.findAll();
     }
+
+    @Get('/:id') // indica que id é uma var de caminho
+    @HttpCode(HttpStatus.OK) // ⬇️ transforma a string caminho no parametro id do tipo number
+    findById(@Param('id', ParseIntPipe) id: number): Promise<Postagem>{
+        return this.postagemService.findById(id);
+    }
+
+    @Get('/titulo/:titulo') // http://localhost:4000/postagens/titulo/ o que eu quero procurar 
+    @HttpCode(HttpStatus.OK) // ⬇️ transforma a string caminho no parametro
+    findAllByTitulo(@Param('titulo') titulo: string): Promise<Postagem[]>{
+        return this.postagemService.findAllByTitulo(titulo);
+    }
+
+    @Post()
+    @HttpCode(HttpStatus.CREATED) 
+    create(@Body() postagem: Postagem): Promise<Postagem>{
+        return this.postagemService.create(postagem);
+    // o decorador @Body extrai o corpo do obj do obj req e preenche
+    // o parametro decorado com o valor do corpo
+    }
+
+    @Put()
+    @HttpCode(HttpStatus.OK) 
+    update(@Body() postagem: Postagem): Promise<Postagem>{
+        return this.postagemService.update(postagem);
+    
+    }
+
+    @Delete("/:id")
+    @HttpCode(HttpStatus.NO_CONTENT) // NO_CONTENT 
+    delete(@Param('id', ParseIntPipe) id: number){
+        return this.postagemService.delete(id);
+    }
+
 }

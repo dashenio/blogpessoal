@@ -54,3 +54,9 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# snapshots de código
+/prints
+
+# banco de dados
+/BANCO_DE_DADOS
