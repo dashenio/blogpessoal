@@ -11,5 +11,4 @@ import { TemaModule } from "../tema/tema.module";
     providers: [PostagemService],
     exports:[]
 })
-
 export class PostagemModule{}

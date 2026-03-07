@@ -5,7 +5,6 @@ import { DeleteResult, ILike, Repository } from "typeorm";
 import { TemaService } from "../../tema/services/tema.service";
 
 @Injectable()
-
 export class PostagemService{
 
     constructor(
