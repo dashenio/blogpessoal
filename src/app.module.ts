@@ -4,6 +4,9 @@ import { PostagemModule } from './postagem/postagem.module';
 import { Postagem } from './postagem/entities/postagem.entity';
 import { Tema } from './tema/entities/tema.entity';
 import { TemaModule } from './tema/tema.module';
+import { UsuarioModule } from './usuario/usuario.module';
+import { Usuario } from './usuario/entities/usuario.entity';
+import { AuthModule } from './auth/auth.module';
 
 
 
@@ -16,15 +19,15 @@ import { TemaModule } from './tema/tema.module';
       username: 'root',
       password: 'root',
       database: 'db_blogpessoal',
-      entities: [Postagem, Tema],
+      entities: [Postagem, Tema, Usuario],
 
       // atualiza a tabela em tempo real
       // em ambiente de produção deve ficar
       // marcada como false
       synchronize: true,
-      logging: false,
+      logging: true,
     }),
-    PostagemModule, TemaModule
+    PostagemModule, TemaModule, AuthModule, UsuarioModule
   ],
   controllers: [],
   providers: [],
