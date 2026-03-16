@@ -15,7 +15,7 @@ import { DevService } from './data/services/dev.service';
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
-	    useClass: DevService, // só alterar para DevService se for usar localmente
+	    useClass: ProdService, // só alterar para DevService se for usar localmente
       imports: [ConfigModule],
     }),
     PostagemModule, TemaModule, AuthModule, UsuarioModule
