@@ -2,9 +2,12 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPip
 import { PostagemService } from "../services/postagem.service";
 import { Postagem } from "../entities/postagem.entity";
 import { JwtAuthGuard } from "../../auth/guard/jwt-auth.guard";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Postagem')
 @UseGuards(JwtAuthGuard)
 @Controller('/postagens')
+@ApiBearerAuth()
 export class PostagemController{
 
     constructor(
@@ -29,7 +32,7 @@ export class PostagemController{
         return this.postagemService.findAllByTitulo(titulo);
     }
 
-    @Post()
+    @Post('/criar')
     @HttpCode(HttpStatus.CREATED) 
     create(@Body() postagem: Postagem): Promise<Postagem>{
         return this.postagemService.create(postagem);
@@ -37,7 +40,7 @@ export class PostagemController{
     // o parametro decorado com o valor do corpo
     }
 
-    @Put()
+    @Put('/atualizar')
     @HttpCode(HttpStatus.OK) 
     update(@Body() postagem: Postagem): Promise<Postagem>{
         return this.postagemService.update(postagem);

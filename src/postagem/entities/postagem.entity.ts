@@ -3,35 +3,42 @@ import { IsNotEmpty, Length } from "class-validator";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Tema } from "../../tema/entities/tema.entity";
 import { Usuario } from "../../usuario/entities/usuario.entity";
+import { ApiProperty } from "@nestjs/swagger";
 
 @Entity({name:'tb_postagens'}) // CREATE TABLE tb_postagens
 export class Postagem{
-
+    
+    @ApiProperty()
     @PrimaryGeneratedColumn() // PRIMARY KEY(id) AUTO_INCREMENT
     id: number;
 
     // Remove espaços em branco início/fim
     @Transform(({ value } : TransformFnParams) => value?.trim())
+    @ApiProperty()
     @IsNotEmpty() // Força digitação
     @Length(5, 100, {message: 'O texto deve ter entre 5 e 100 caracteres'})
     @Column({length: 100, nullable: false}) // VARCHAR(100) NOT NULL
     titulo: string;
     
+    @ApiProperty()
     @Transform(({ value } : TransformFnParams) => value?.trim())
     @IsNotEmpty() // Força digitação
     @Length(10, 1000, {message: 'O texto deve ter entre 10 e 1000 caracteres'})
     @Column({length: 1000, nullable: false}) // VARCHAR(1000) NOT NULL
     texto: string;
     
+    @ApiProperty()
     @UpdateDateColumn() // Atualiza a data de criação da postagem com a data atual
     data: Date;
     
+    @ApiProperty({ type: () => Tema }) 
     @ManyToOne( () => Tema, (tema) => tema.postagem, {
         onDelete: 'CASCADE'
     })
     tema: Tema; // Representa a chave estrangeira
 
-     @ManyToOne( () => Usuario, (usuario) => usuario.postagem, {
+    @ApiProperty({ type: () => Usuario }) 
+    @ManyToOne( () => Usuario, (usuario) => usuario.postagem, {
         onDelete: 'CASCADE'
     })
     usuario: Usuario;
